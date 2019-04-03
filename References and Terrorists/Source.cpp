@@ -37,12 +37,16 @@ int main()
 	cout << "Joe's going to have a hefty payday, and we're going to have free coffee for life.\n";
 	cout << "Press any button on your keyboard and the enter key to initiate the swap program.\n";
 	cin >> FlavorIn; // Added this cin to make it seem like the player is actually starting the program, just some flavor
-	NormalBankTransaction(HackersBackBalance, JoesCoffeShopBalance); // Calls the NormalBankTransaction function with the parameters of the Hacker's and Joe's bank balances.
-	cout << "Damnit! They added some kind of countermeasure.\n";
+	NormalBankTransaction(JoesCoffeShopBalance, HackersBackBalance); // Calls the NormalBankTransaction function with the parameters of the Hacker's and Joe's bank balances.
+	cout << "\nDamnit! They added some kind of countermeasure.\n";
 	cout << "Give me a second here...\n";
 	cout << "Okay, let's give this one a try.\n";
 	cout << "Press any button on your keyboard and the enter key to initiate our new and improved swap program.\n";
-	cin >> FlavorIn;
+	cin >> FlavorIn; // Again, added for flavor
+	HackedBankTransaction(JoesCoffeShopBalance, HackersBackBalance); // Calls the HackedBankTransaction with the parameters of the Hacker's and Joe's bank balances.
+	cout << "Hell yeah! It worked!\n";
+	cout << "Well Agent " << AgentName << ", looks like our work here is done.\n";
+	cout << "How bout some coffee?\n";
 	system("pause");
 	return 0;
 }
@@ -54,17 +58,19 @@ void AgentChoice() // Simple function that uses a swap to let the player choose 
 	cout << "2 - The Terrorist's Account\n\n";
 	SetConsoleTextAttribute(hConsole, 15);
 	cin >> Choice;
-	switch(Choice)
+	switch(Choice) // Heres a switch so the player can choose
 	{
-	case 1:
+	case 1: // If they put in 1, then this code will play out
 		CheckJoesBankBalance();
 		cout << "Now for the hacker's account.\n\n";
+		system("pause");
 		CheckHackerBankBalance();
 		break;
 
-	case 2:
+	case 2: // If they put in 2, then this code will play out
 		CheckHackerBankBalance();
 		cout << "Now for Joe's Bank account.\n\n";
+		system("pause");
 		CheckJoesBankBalance();
 		break;
 	}
@@ -72,38 +78,46 @@ void AgentChoice() // Simple function that uses a swap to let the player choose 
 }
 
 
-void CheckJoesBankBalance()
+void CheckJoesBankBalance() // Simple function to show the balance of Joe's Bank Account
 {
 	cout << "\nJOE'S BANK BALANCE\n";
 	cout << "$" << JoesCoffeShopBalance << endl;
-	system("pause");
 	return;
 }
 
-void CheckHackerBankBalance()
+void CheckHackerBankBalance() // Simple function to show the balance of the Hacker's bank account
 {
 	cout << "\nHACKER'S BANK BALANCE\n";
 	cout << "$" << HackersBackBalance << endl;
-	system("pause");
 	return;
 }
 
-void NormalBankTransaction(int x, int y)
+void NormalBankTransaction(int x, int y) // Bank transaction that won't switch the two, it will simply show the values of each
 {
 	cout << "\nInitializing Bank Transaction..."<< endl;
 	int temp = x;
 	x = y;
 	y = temp;
-	SetConsoleTextAttribute(hConsole, 12);
+	SetConsoleTextAttribute(hConsole, 12); // Console text color for flavor
 	cout << "Warning, credentials invalid. Transaction Failed.\n";
-	SetConsoleTextAttribute(hConsole, 15);
+	SetConsoleTextAttribute(hConsole, 15); // Console text color for flavor
 	CheckJoesBankBalance();
 	CheckHackerBankBalance();
 	system("pause");
 	return;
 }
 
-void HackedBankTransaction(int& x, int& y)
+void HackedBankTransaction(int& x, int& y) // Bank transaction that will switch the two. Because they are references, the function has the ability to switch the two
 {
-	
+	cout << "\nInitializing Bank Transaction..." << endl;
+	int temp = x;
+	x = y;
+	y = temp;
+	SetConsoleTextAttribute(hConsole, 10); // Console text color for flavor
+	cout << "Bank transaction Success." << endl;
+	SetConsoleTextAttribute(hConsole, 15); // Console text color for flavor
+	CheckJoesBankBalance();
+	CheckHackerBankBalance();
+	system("pause");
+	return;
 }
